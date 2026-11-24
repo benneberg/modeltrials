@@ -313,7 +313,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
         <div className="lg:col-span-7 p-5 rounded-2xl bg-[#FAF8F3] dark:bg-[#1B1E1D] border border-[#DDD7C9] dark:border-[#2B2F2D]">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
                 Checkpoints & Deliverables
               </span>
               <h2 className="text-lg font-editorial text-[#1C1B18] dark:text-[#F2F0EC]">
@@ -323,7 +323,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
             <button
               type="button"
               onClick={() => setShowAddMilestone(!showAddMilestone)}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#F4F1EA] dark:bg-[#121413] border border-[#DDD7C9] dark:border-[#2B2F2D] text-[#2F5D50] dark:text-[#428E72]"
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#F4F1EA] dark:bg-[#121413] border border-[#DDD7C9] dark:border-[#2B2F2D] text-[#2F5D50] dark:text-[#5FAE92]"
             >
               <Plus className="w-3.5 h-3.5" /> Add Milestone
             </button>
@@ -406,7 +406,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
                       <p className="text-xs text-[#5C615E] dark:text-[#A3A8A5]">
                         {ms.description}
                       </p>
-                      <div className="flex flex-wrap items-center gap-3 text-[11px] font-mono text-[#8E9490] pt-1">
+                      <div className="flex flex-wrap items-center gap-3 text-[11px] font-mono text-[#6A6558] dark:text-[#8E9490] pt-1">
                         <span className="flex items-center gap-1">
                           <Calendar className="w-3 h-3" />
                           Due:{' '}
@@ -440,7 +440,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
         <div className="lg:col-span-5 p-5 rounded-2xl bg-[#FAF8F3] dark:bg-[#1B1E1D] border border-[#DDD7C9] dark:border-[#2B2F2D]">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
                 Persistent Client Timers
               </span>
               <h2 className="text-lg font-editorial text-[#1C1B18] dark:text-[#F2F0EC]">
@@ -450,7 +450,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
             <button
               type="button"
               onClick={() => setShowAddSchedule(!showAddSchedule)}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#F4F1EA] dark:bg-[#121413] border border-[#DDD7C9] dark:border-[#2B2F2D] text-[#2F5D50] dark:text-[#428E72]"
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#F4F1EA] dark:bg-[#121413] border border-[#DDD7C9] dark:border-[#2B2F2D] text-[#2F5D50] dark:text-[#5FAE92]"
             >
               <Plus className="w-3.5 h-3.5" /> Schedule
             </button>
@@ -503,7 +503,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
 
           <div className="space-y-2.5">
             {trial.schedules.length === 0 ? (
-              <p className="text-xs text-[#8E9490] py-6 text-center">
+              <p className="text-xs text-[#6A6558] dark:text-[#8E9490] py-6 text-center">
                 No recurring check-ins configured for this event.
               </p>
             ) : (
@@ -521,7 +521,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
                       {sc.status === 'MISSED' ? (
                         <AlertCircle className="w-3.5 h-3.5 text-[#D98A2B]" />
                       ) : (
-                        <Clock className="w-3.5 h-3.5 text-[#8E9490]" />
+                        <Clock className="w-3.5 h-3.5 text-[#6A6558] dark:text-[#8E9490]" />
                       )}
                       <span className="text-xs font-semibold text-[#1C1B18] dark:text-[#F2F0EC]">
                         {sc.title}
@@ -543,7 +543,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
                     {sc.promptTemplate}
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-[#8E9490]">
+                    <span className="text-[10px] font-mono text-[#6A6558] dark:text-[#8E9490]">
                       Next:{' '}
                       {new Date(sc.nextRunAt).toLocaleDateString([], {
                         month: 'short',
@@ -632,7 +632,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
             <div className="lg:col-span-6 space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-mono uppercase tracking-wider text-[#5C615E] dark:text-[#A3A8A5] flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5 text-[#2F5D50]" />
+                  <Layers className="w-3.5 h-3.5 text-[#2F5D50] dark:text-[#5FAE92]" />
                   Deliverable Versions ({participantSubmissions.length})
                 </span>
                 <button
@@ -645,7 +645,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
                     );
                     setShowSubmissionForm(!showSubmissionForm);
                   }}
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#2F5D50] dark:text-[#428E72] hover:underline"
+                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#2F5D50] dark:text-[#5FAE92] hover:underline"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   {showSubmissionForm
@@ -687,7 +687,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
                       </span>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                         <div>
-                          <label className="block text-[10px] font-mono text-[#8E9490]">
+                          <label className="block text-[10px] font-mono text-[#6A6558] dark:text-[#8E9490]">
                             Total Equity ($)
                           </label>
                           <input
@@ -701,7 +701,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
                           />
                         </div>
                         <div>
-                          <label className="block text-[10px] font-mono text-[#8E9490]">
+                          <label className="block text-[10px] font-mono text-[#6A6558] dark:text-[#8E9490]">
                             Cash / T-Bill ($)
                           </label>
                           <input
@@ -713,7 +713,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
                           />
                         </div>
                         <div>
-                          <label className="block text-[10px] font-mono text-[#8E9490]">
+                          <label className="block text-[10px] font-mono text-[#6A6558] dark:text-[#8E9490]">
                             Max DD (%)
                           </label>
                           <input
@@ -727,7 +727,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
                           />
                         </div>
                         <div>
-                          <label className="block text-[10px] font-mono text-[#8E9490]">
+                          <label className="block text-[10px] font-mono text-[#6A6558] dark:text-[#8E9490]">
                             Sharpe Est.
                           </label>
                           <input
@@ -764,11 +764,11 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
 
               {participantSubmissions.length === 0 ? (
                 <div className="p-6 rounded-xl border border-dashed border-[#DDD7C9] dark:border-[#2B2F2D] text-center">
-                  <FileText className="w-6 h-6 text-[#8E9490] mx-auto mb-1.5" />
+                  <FileText className="w-6 h-6 text-[#6A6558] dark:text-[#8E9490] mx-auto mb-1.5" />
                   <p className="text-xs font-medium text-[#5C615E] dark:text-[#A3A8A5]">
                     No versioned deliverable logged for {activeParticipant.pseudonym} at this milestone yet.
                   </p>
-                  <p className="text-[11px] text-[#8E9490] mt-1">
+                  <p className="text-[11px] text-[#6A6558] dark:text-[#8E9490] mt-1">
                     Click &ldquo;Log New Version (v1)&rdquo; above or promote any response from the Arena chat.
                   </p>
                 </div>
@@ -788,7 +788,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
                             {sub.title}
                           </span>
                         </div>
-                        <span className="text-[10px] font-mono text-[#8E9490]">
+                        <span className="text-[10px] font-mono text-[#6A6558] dark:text-[#8E9490]">
                           {new Date(sub.submittedAt).toLocaleString([], {
                             month: 'short',
                             day: 'numeric',
@@ -801,7 +801,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
                         {sub.content}
                       </p>
                       {sub.notes && (
-                        <p className="text-[11px] font-mono text-[#8E9490] mt-2 pt-2 border-t border-[#DDD7C9] dark:border-[#2B2F2D]">
+                        <p className="text-[11px] font-mono text-[#6A6558] dark:text-[#8E9490] mt-2 pt-2 border-t border-[#DDD7C9] dark:border-[#2B2F2D]">
                           Audit Note: {sub.notes}
                         </p>
                       )}
@@ -818,7 +818,7 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <Scale className="w-4 h-4 text-[#2F5D50] dark:text-[#428E72]" />
+                  <Scale className="w-4 h-4 text-[#2F5D50] dark:text-[#5FAE92]" />
                   <span className="text-xs font-mono uppercase tracking-wider font-semibold text-[#1C1B18] dark:text-[#F2F0EC]">
                     Weighted Rubric Evaluation
                   </span>
@@ -857,15 +857,15 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
                           </span>
                         </div>
                         <div className="text-right font-mono tabular-nums">
-                          <span className="text-sm font-bold text-[#2F5D50] dark:text-[#428E72]">
+                          <span className="text-sm font-bold text-[#2F5D50] dark:text-[#5FAE92]">
                             {val}
                           </span>
-                          <span className="text-[10px] text-[#8E9490]">
+                          <span className="text-[10px] text-[#6A6558] dark:text-[#8E9490]">
                             /100 (+{weightedContribution} pts)
                           </span>
                         </div>
                       </div>
-                      <p className="text-[11px] text-[#8E9490] mb-2">
+                      <p className="text-[11px] text-[#6A6558] dark:text-[#8E9490] mb-2">
                         {crit.description}
                       </p>
                       <input
@@ -904,12 +904,12 @@ export const MilestonesEvalView: React.FC<MilestonesEvalViewProps> = ({
               {/* Live Weighted Composite Total Footer */}
               <div className="flex items-center justify-between pt-3 border-t border-[#DDD7C9] dark:border-[#2B2F2D]">
                 <div>
-                  <span className="block text-[10px] font-mono uppercase tracking-wider text-[#8E9490]">
+                  <span className="block text-[10px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
                     Computed Composite Score ({judgeType})
                   </span>
                   <span className="text-2xl font-mono font-bold tabular-nums text-[#1C1B18] dark:text-[#F2F0EC]">
                     {liveWeightedTotal.toFixed(2)}{' '}
-                    <span className="text-xs font-normal text-[#8E9490]">
+                    <span className="text-xs font-normal text-[#6A6558] dark:text-[#8E9490]">
                       / 100.00
                     </span>
                   </span>

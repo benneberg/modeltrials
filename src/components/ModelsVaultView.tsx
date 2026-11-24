@@ -275,7 +275,7 @@ export const ModelsVaultView: React.FC<ModelsVaultViewProps> = ({
       <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF8F3] dark:bg-[#1B1E1D] border border-[#DDD7C9] dark:border-[#2B2F2D]">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
               Client-Side Adapter Registry
             </span>
             <h2 className="text-xl font-editorial text-[#1C1B18] dark:text-[#F2F0EC]">
@@ -422,7 +422,7 @@ export const ModelsVaultView: React.FC<ModelsVaultViewProps> = ({
                 <div>
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-[#8E9490]">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
                         {m.provider.toUpperCase()} · {m.modelId}
                       </span>
                       <h3 className="text-sm font-semibold text-[#1C1B18] dark:text-[#F2F0EC]">
@@ -436,7 +436,7 @@ export const ModelsVaultView: React.FC<ModelsVaultViewProps> = ({
                     </span>
                   </div>
 
-                  <p className="text-[11px] font-mono text-[#8E9490] truncate mt-1">
+                  <p className="text-[11px] font-mono text-[#6A6558] dark:text-[#8E9490] truncate mt-1">
                     Endpoint: {m.endpoint}
                   </p>
                   {m.statusMessage && (
@@ -487,7 +487,7 @@ export const ModelsVaultView: React.FC<ModelsVaultViewProps> = ({
                       <button
                         type="button"
                         onClick={() => onDeleteModel(m.id)}
-                        className="p-1 text-[#8E9490] hover:text-[#B93829]"
+                        className="p-1 text-[#6A6558] dark:text-[#8E9490] hover:text-[#B93829]"
                         title="Delete model definition"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -507,7 +507,7 @@ export const ModelsVaultView: React.FC<ModelsVaultViewProps> = ({
         <div className="lg:col-span-6 p-5 sm:p-6 rounded-2xl bg-[#FAF8F3] dark:bg-[#1B1E1D] border border-[#DDD7C9] dark:border-[#2B2F2D] space-y-4">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-[#2F5D50] dark:text-[#428E72] font-semibold flex items-center gap-1">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-[#2F5D50] dark:text-[#5FAE92] font-semibold flex items-center gap-1">
                 <Lock className="w-3 h-3" /> Web Crypto API · AES-256-GCM
               </span>
               <h2 className="text-xl font-editorial text-[#1C1B18] dark:text-[#F2F0EC]">
@@ -526,7 +526,7 @@ export const ModelsVaultView: React.FC<ModelsVaultViewProps> = ({
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               <div>
-                <label className="block text-[10px] font-mono uppercase text-[#8E9490] mb-1">
+                <label className="block text-[10px] font-mono uppercase text-[#6A6558] dark:text-[#8E9490] mb-1">
                   Provider
                 </label>
                 <select
@@ -544,7 +544,7 @@ export const ModelsVaultView: React.FC<ModelsVaultViewProps> = ({
                 </select>
               </div>
               <div>
-                <label className="block text-[10px] font-mono uppercase text-[#8E9490] mb-1">
+                <label className="block text-[10px] font-mono uppercase text-[#6A6558] dark:text-[#8E9490] mb-1">
                   Key Label
                 </label>
                 <input
@@ -559,7 +559,7 @@ export const ModelsVaultView: React.FC<ModelsVaultViewProps> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               <div>
-                <label className="block text-[10px] font-mono uppercase text-[#8E9490] mb-1">
+                <label className="block text-[10px] font-mono uppercase text-[#6A6558] dark:text-[#8E9490] mb-1">
                   Raw Provider API Key
                 </label>
                 <input
@@ -572,11 +572,11 @@ export const ModelsVaultView: React.FC<ModelsVaultViewProps> = ({
                 />
               </div>
               <div>
-                <label className="block text-[10px] font-mono uppercase text-[#8E9490] mb-1">
+                <label className="block text-[10px] font-mono uppercase text-[#6A6558] dark:text-[#8E9490] mb-1">
                   Vault Passphrase
                 </label>
                 {vaultUnlocked ? (
-                  <div className="flex items-center justify-between gap-2 px-2.5 py-1.5 text-xs rounded-lg bg-[#2F5D50]/10 border border-[#2F5D50]/30 text-[#2F5D50]">
+                  <div className="flex items-center justify-between gap-2 px-2.5 py-1.5 text-xs rounded-lg bg-[#2F5D50]/10 border border-[#2F5D50]/30 text-[#2F5D50] dark:text-[#5FAE92]">
                     <span className="flex items-center gap-1.5 font-semibold">
                       <ShieldCheck className="w-3.5 h-3.5" /> Unlocked · auto-locks after{' '}
                       {AUTO_LOCK_MS / 60000} min idle
@@ -611,7 +611,7 @@ export const ModelsVaultView: React.FC<ModelsVaultViewProps> = ({
                     </button>
                   </div>
                 )}
-                <p className="mt-1 text-[10px] leading-snug text-[#8E9490]">
+                <p className="mt-1 text-[10px] leading-snug text-[#6A6558] dark:text-[#8E9490]">
                   {vaultError ??
                     'Never stored or exported. First time? Whatever you enter becomes your passphrase. Forget it and you re-enter your API keys.'}
                 </p>
@@ -632,13 +632,13 @@ export const ModelsVaultView: React.FC<ModelsVaultViewProps> = ({
 
           {/* Stored Encrypted Credentials List */}
           <div className="space-y-2">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E9490] flex items-center gap-1.5">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490] flex items-center gap-1.5">
               <Database className="w-3.5 h-3.5" />
               IndexedDB Encrypted Credentials ({credentials.length})
             </span>
 
             {credentials.length === 0 ? (
-              <div className="p-4 rounded-xl border border-dashed border-[#DDD7C9] dark:border-[#2B2F2D] text-xs text-[#8E9490] text-center">
+              <div className="p-4 rounded-xl border border-dashed border-[#DDD7C9] dark:border-[#2B2F2D] text-xs text-[#6A6558] dark:text-[#8E9490] text-center">
                 No encrypted API keys stored yet. Add a key above to enable live browser-to-provider API calls, or run trials in zero-cost Sandbox / Manual mode.
               </div>
             ) : (
@@ -661,7 +661,7 @@ export const ModelsVaultView: React.FC<ModelsVaultViewProps> = ({
                         </span>
                       )}
                     </div>
-                    <div className="text-[11px] font-mono text-[#8E9490] truncate">
+                    <div className="text-[11px] font-mono text-[#6A6558] dark:text-[#8E9490] truncate">
                       {c.provider.toUpperCase()} · {c.maskedPreview} · IV:{' '}
                       {c.ivBase64.slice(0, 8)}…
                     </div>
@@ -684,7 +684,7 @@ export const ModelsVaultView: React.FC<ModelsVaultViewProps> = ({
                     <button
                       type="button"
                       onClick={() => onDeleteCredential(c.id)}
-                      className="p-1.5 text-[#8E9490] hover:text-[#B93829]"
+                      className="p-1.5 text-[#6A6558] dark:text-[#8E9490] hover:text-[#B93829]"
                       title="Delete encrypted credential"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -780,7 +780,7 @@ export const ModelsVaultView: React.FC<ModelsVaultViewProps> = ({
               <span className="text-xs font-semibold text-[#1C1B18] dark:text-[#F2F0EC]">
                 Restore or Duplicate Trial from JSON
               </span>
-              <label className="inline-flex items-center gap-1 text-xs font-semibold text-[#2F5D50] dark:text-[#428E72] cursor-pointer hover:underline">
+              <label className="inline-flex items-center gap-1 text-xs font-semibold text-[#2F5D50] dark:text-[#5FAE92] cursor-pointer hover:underline">
                 <Upload className="w-3.5 h-3.5" /> Upload .JSON File
                 <input
                   type="file"

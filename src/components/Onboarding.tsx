@@ -90,7 +90,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
           type="button"
           aria-label="Hide getting started"
           onClick={() => update({ dismissed: true })}
-          className="p-1.5 -m-1.5 text-[#8E9490] hover:text-[#1C1B18] dark:hover:text-white spring-press"
+          className="p-1.5 -m-1.5 text-[#6A6558] dark:text-[#8E9490] hover:text-[#1C1B18] dark:hover:text-white spring-press"
         >
           <X className="w-4 h-4" />
         </button>

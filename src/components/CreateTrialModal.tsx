@@ -317,7 +317,7 @@ export const CreateTrialModal: React.FC<CreateTrialModalProps> = ({
         {/* Sticky Header */}
         <div className="sticky top-0 z-10 flex items-center justify-between px-5 py-4 bg-[#FAF8F3]/95 dark:bg-[#1B1E1D]/95 backdrop-blur-md border-b border-[#DDD7C9] dark:border-[#2B2F2D]">
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-widest text-[#2F5D50] dark:text-[#428E72] font-semibold">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-[#2F5D50] dark:text-[#5FAE92] font-semibold">
               Specification Studio
             </span>
             <h2 className="text-xl font-editorial text-[#1C1B18] dark:text-[#F2F0EC]">
@@ -522,7 +522,7 @@ export const CreateTrialModal: React.FC<CreateTrialModalProps> = ({
                       </div>
                       <span
                         className={`block text-[10px] mt-0.5 ${
-                          active ? 'text-white/80' : 'text-[#8E9490]'
+                          active ? 'text-white/80' : 'text-[#6A6558] dark:text-[#8E9490]'
                         }`}
                       >
                         {item.desc}
@@ -544,7 +544,7 @@ export const CreateTrialModal: React.FC<CreateTrialModalProps> = ({
                 <button
                   type="button"
                   onClick={handleAddParticipant}
-                  className="inline-flex items-center gap-1 text-xs font-medium text-[#2F5D50] dark:text-[#428E72] hover:underline"
+                  className="inline-flex items-center gap-1 text-xs font-medium text-[#2F5D50] dark:text-[#5FAE92] hover:underline"
                 >
                   <Plus className="w-3.5 h-3.5" /> Add Model Slot
                 </button>
@@ -566,7 +566,7 @@ export const CreateTrialModal: React.FC<CreateTrialModalProps> = ({
                       style={{ backgroundColor: palette.hex }}
                       title={palette.name}
                     />
-                    <span className="text-xs font-mono text-[#8E9490] w-6">
+                    <span className="text-xs font-mono text-[#6A6558] dark:text-[#8E9490] w-6">
                       #{idx + 1}
                     </span>
                     <select
@@ -599,7 +599,7 @@ export const CreateTrialModal: React.FC<CreateTrialModalProps> = ({
                       <button
                         type="button"
                         onClick={() => handleRemoveParticipant(idx)}
-                        className="p-1.5 text-[#8E9490] hover:text-[#B93829]"
+                        className="p-1.5 text-[#6A6558] dark:text-[#8E9490] hover:text-[#B93829]"
                         title="Remove participant"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -632,7 +632,7 @@ export const CreateTrialModal: React.FC<CreateTrialModalProps> = ({
                   <button
                     type="button"
                     onClick={normalizeWeightsTo100}
-                    className="text-xs font-mono underline text-[#2F5D50] dark:text-[#428E72]"
+                    className="text-xs font-mono underline text-[#2F5D50] dark:text-[#5FAE92]"
                   >
                     Auto-Balance 100%
                   </button>
@@ -657,7 +657,7 @@ export const CreateTrialModal: React.FC<CreateTrialModalProps> = ({
                       }}
                       className="flex-1 text-xs font-semibold bg-transparent border-b border-transparent focus:border-[#2F5D50] focus:outline-none text-[#1C1B18] dark:text-[#F2F0EC]"
                     />
-                    <span className="text-xs font-mono font-bold tabular-nums text-[#2F5D50] dark:text-[#428E72] w-12 text-right">
+                    <span className="text-xs font-mono font-bold tabular-nums text-[#2F5D50] dark:text-[#5FAE92] w-12 text-right">
                       {c.weight}%
                     </span>
                   </div>

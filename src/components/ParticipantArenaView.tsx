@@ -107,7 +107,7 @@ export const ParticipantArenaView: React.FC<ParticipantArenaViewProps> = ({
   const getMessageBadgeStyle = (type: ChatMessageType) => {
     switch (type) {
       case 'USER_PROMPT':
-        return 'bg-[#2F5D50]/12 text-[#2F5D50] dark:text-[#428E72]';
+        return 'bg-[#2F5D50]/12 text-[#2F5D50] dark:text-[#5FAE92]';
       case 'SCHEDULED_CHECKIN':
         return 'bg-[#D98A2B]/18 text-[#D98A2B]';
       case 'SYSTEM_INSTRUCTION':
@@ -186,7 +186,7 @@ export const ParticipantArenaView: React.FC<ParticipantArenaViewProps> = ({
               />
               <div className="text-left">
                 <div className="font-semibold leading-none">{p.pseudonym}</div>
-                <div className="text-[10px] text-[#8E9490] mt-0.5 font-mono">
+                <div className="text-[10px] text-[#6A6558] dark:text-[#8E9490] mt-0.5 font-mono">
                   {p.modelName}
                   {pnlPct !== null && (
                     <span
@@ -235,7 +235,7 @@ export const ParticipantArenaView: React.FC<ParticipantArenaViewProps> = ({
                     : 'SANDBOX & MANUAL FALLBACK'}
                 </span>
               </div>
-              <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-[#8E9490] mt-0.5 tabular-nums">
+              <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-[#6A6558] dark:text-[#8E9490] mt-0.5 tabular-nums">
                 {trial.isRealMoney && (
                   <span className="text-[#1C1B18] dark:text-[#F2F0EC] font-semibold flex items-center gap-1">
                     <Coins className="w-3.5 h-3.5 text-[#A8502F]" />
@@ -269,7 +269,7 @@ export const ParticipantArenaView: React.FC<ParticipantArenaViewProps> = ({
               onClick={() => setShowSystemPromptModal(!showSystemPromptModal)}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-[#DDD7C9] dark:border-[#2B2F2D] text-[#1C1B18] dark:text-[#F2F0EC] hover:bg-[#F4F1EA] dark:hover:bg-[#242826]"
             >
-              <Code2 className="w-3.5 h-3.5 text-[#2F5D50] dark:text-[#428E72]" />
+              <Code2 className="w-3.5 h-3.5 text-[#2F5D50] dark:text-[#5FAE92]" />
               {showSystemPromptModal
                 ? 'Hide Context Prompt'
                 : `Inspect ${trial.visibilityMode} Prompt`}
@@ -303,7 +303,7 @@ export const ParticipantArenaView: React.FC<ParticipantArenaViewProps> = ({
               Compiled {trial.visibilityMode} System Prompt (Isolated Context for{' '}
               {activeParticipant.pseudonym})
             </span>
-            <span className="text-[11px] font-mono text-[#8E9490]">
+            <span className="text-[11px] font-mono text-[#6A6558] dark:text-[#8E9490]">
               Enforced automatically on every API / Check-in call
             </span>
           </div>
@@ -317,7 +317,7 @@ export const ParticipantArenaView: React.FC<ParticipantArenaViewProps> = ({
       <div className="p-4 sm:p-5 rounded-2xl bg-[#FAF8F3] dark:bg-[#1B1E1D] border border-[#DDD7C9] dark:border-[#2B2F2D] space-y-4">
         <div className="flex items-center justify-between border-b border-[#DDD7C9] dark:border-[#2B2F2D] pb-3">
           <div className="flex items-center gap-2">
-            <Terminal className="w-4 h-4 text-[#2F5D50] dark:text-[#428E72]" />
+            <Terminal className="w-4 h-4 text-[#2F5D50] dark:text-[#5FAE92]" />
             <span className="text-xs font-mono uppercase tracking-wider text-[#5C615E] dark:text-[#A3A8A5]">
               Independent Execution Thread ({activeParticipant.messages.length}{' '}
               messages)
@@ -378,7 +378,7 @@ export const ParticipantArenaView: React.FC<ParticipantArenaViewProps> = ({
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-2 text-[10px] font-mono text-[#8E9490] tabular-nums">
+                  <div className="flex items-center gap-2 text-[10px] font-mono text-[#6A6558] dark:text-[#8E9490] tabular-nums">
                     {msg.tokensOutput && (
                       <span>
                         {msg.tokensInput}+{msg.tokensOutput} tok ($
@@ -409,7 +409,7 @@ export const ParticipantArenaView: React.FC<ParticipantArenaViewProps> = ({
 
                 {isModel && activeMilestone && msg.executionMode !== 'failed' && (
                   <div className="mt-3 pt-2.5 border-t border-[#DDD7C9] dark:border-[#2B2F2D] flex items-center justify-between">
-                    <span className="text-[11px] font-mono text-[#8E9490]">
+                    <span className="text-[11px] font-mono text-[#6A6558] dark:text-[#8E9490]">
                       Execution mode:{' '}
                       {msg.executionMode === 'direct_api'
                         ? 'Direct Provider API'
@@ -429,7 +429,7 @@ export const ParticipantArenaView: React.FC<ParticipantArenaViewProps> = ({
                         setPromotedMsgId(msg.id);
                         setTimeout(() => setPromotedMsgId(null), 2500);
                       }}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#2F5D50] dark:text-[#428E72] hover:underline"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#2F5D50] dark:text-[#5FAE92] hover:underline"
                     >
                       {promotedMsgId === msg.id ? (
                         <>
@@ -453,7 +453,7 @@ export const ParticipantArenaView: React.FC<ParticipantArenaViewProps> = ({
               aria-live="polite"
               className="p-4 rounded-xl border bg-[#F4F1EA] dark:bg-[#121413] border-[#DDD7C9] dark:border-[#2B2F2D] sm:mr-6"
             >
-              <span className="block mb-2 font-mono text-[10px] uppercase tracking-wider text-[#2F5D50] dark:text-[#428E72]">
+              <span className="block mb-2 font-mono text-[10px] uppercase tracking-wider text-[#2F5D50] dark:text-[#5FAE92]">
                 streaming…
               </span>
               <div className="text-xs sm:text-sm whitespace-pre-wrap leading-relaxed text-[#1C1B18] dark:text-[#F2F0EC]">
@@ -520,7 +520,7 @@ export const ParticipantArenaView: React.FC<ParticipantArenaViewProps> = ({
                   onChange={(e) => setBroadcastToAll(e.target.checked)}
                   className="rounded accent-[#2F5D50]"
                 />
-                <Layers className="w-3.5 h-3.5 text-[#2F5D50] dark:text-[#428E72]" />
+                <Layers className="w-3.5 h-3.5 text-[#2F5D50] dark:text-[#5FAE92]" />
                 Broadcast to All {trial.participants.length} Models
               </label>
             </div>

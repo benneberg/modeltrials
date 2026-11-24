@@ -99,11 +99,11 @@ export const EquityComparisonChart: React.FC<EquityComparisonChartProps> = ({
   if (maxSteps < 2) {
     return (
       <div className="flex flex-col items-center justify-center py-10 px-4 text-center border border-dashed border-[#DDD7C9] dark:border-[#2B2F2D] rounded-xl bg-[#F4F1EA]/60 dark:bg-[#121413]/40">
-        <NordicRadarIllustration className="w-12 h-12 mb-2 text-[#8E9490]" />
+        <NordicRadarIllustration className="w-12 h-12 mb-2 text-[#6A6558] dark:text-[#8E9490]" />
         <p className="text-sm font-medium text-[#5C615E] dark:text-[#A3A8A5]">
           Awaiting Milestone 1 Telemetry
         </p>
-        <p className="text-xs text-[#8E9490] mt-1 max-w-xs">
+        <p className="text-xs text-[#6A6558] dark:text-[#8E9490] mt-1 max-w-xs">
           Log a portfolio snapshot or rubric evaluation to plot multi-agent performance trajectories.
         </p>
       </div>
@@ -157,7 +157,7 @@ export const EquityComparisonChart: React.FC<EquityComparisonChartProps> = ({
       {/* Top Controls & Live Scrubber Readout */}
       <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+          <span className="text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
             Checkpoint:
           </span>
           <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-[#EBE6DB] dark:bg-[#242826] text-[#1C1B18] dark:text-[#F2F0EC]">

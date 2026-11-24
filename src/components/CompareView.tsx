@@ -46,14 +46,14 @@ const Column: React.FC<{ p: Participant; turn?: Turn }> = ({ p, turn }) => (
     <div className="flex items-center justify-between gap-2 mb-2">
       <span className="text-xs font-semibold text-[#1C1B18] dark:text-[#F2F0EC]">{p.pseudonym}</span>
       {turn && turn.responses.length > 0 && (
-        <span className="font-mono text-[10px] text-[#8E9490] tabular-nums">
+        <span className="font-mono text-[10px] text-[#6A6558] dark:text-[#8E9490] tabular-nums">
           {turn.responses.reduce((n, r) => n + (r.tokensOutput || 0), 0).toLocaleString()} tok · $
           {turn.responses.reduce((n, r) => n + (r.estimatedCostUsd || 0), 0).toFixed(3)}
         </span>
       )}
     </div>
     {!turn || turn.responses.length === 0 ? (
-      <p className="text-xs italic text-[#8E9490]">No response for this turn.</p>
+      <p className="text-xs italic text-[#6A6558] dark:text-[#8E9490]">No response for this turn.</p>
     ) : (
       turn.responses.map((r) => (
         <div key={r.id} className="mb-2 last:mb-0">
@@ -61,7 +61,7 @@ const Column: React.FC<{ p: Participant; turn?: Turn }> = ({ p, turn }) => (
             <span className="block mb-1 font-mono text-[10px] text-[#A8502F]">failed call</span>
           )}
           {r.executionMode === 'simulated_sandbox' && (
-            <span className="block mb-1 font-mono text-[10px] text-[#8E9490]">simulated</span>
+            <span className="block mb-1 font-mono text-[10px] text-[#6A6558] dark:text-[#8E9490]">simulated</span>
           )}
           <div className="text-xs sm:text-[13px] leading-relaxed whitespace-pre-wrap text-[#1C1B18] dark:text-[#F2F0EC]">
             {r.content}
@@ -130,7 +130,7 @@ export const CompareView: React.FC<CompareViewProps> = ({ trial, leftId, rightId
       </div>
 
       {count === 0 ? (
-        <p className="p-6 text-center text-sm text-[#8E9490]">
+        <p className="p-6 text-center text-sm text-[#6A6558] dark:text-[#8E9490]">
           Nothing to compare yet. Use “Broadcast to all” on a prompt so both participants answer the same thing.
         </p>
       ) : (

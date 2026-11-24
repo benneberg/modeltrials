@@ -160,7 +160,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
               <span className="text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-[#EBE6DB] dark:bg-[#242826] text-[#5C615E] dark:text-[#A3A8A5]">
                 {trial.category}
               </span>
-              <span className="inline-flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-[#2F5D50]/10 text-[#2F5D50] dark:text-[#428E72] font-semibold">
+              <span className="inline-flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-[#2F5D50]/10 text-[#2F5D50] dark:text-[#5FAE92] font-semibold">
                 {trial.visibilityMode === 'ISOLATED' && (
                   <Lock className="w-3 h-3" />
                 )}
@@ -240,7 +240,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
         {/* 4-Metric Nordic Telemetry Bar */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5 pt-4 border-t border-[#DDD7C9] dark:border-[#2B2F2D]">
           <div>
-            <span className="block text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+            <span className="block text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
               Current Leader
             </span>
             <div className="flex items-center gap-1.5 mt-1">
@@ -258,7 +258,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
           </div>
 
           <div>
-            <span className="block text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+            <span className="block text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
               {trial.isRealMoney ? 'Leader Net P&L' : 'Top Rubric Score'}
             </span>
             <span className="block text-sm font-mono font-semibold tabular-nums mt-1 text-[#2A6F4E]">
@@ -279,7 +279,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
           </div>
 
           <div>
-            <span className="block text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+            <span className="block text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
               Milestones & Checkpoints
             </span>
             <button
@@ -288,12 +288,12 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
               className="text-sm font-mono font-semibold tabular-nums mt-1 text-[#1C1B18] dark:text-[#F2F0EC] hover:text-[#2F5D50] flex items-center gap-1"
             >
               {completedMilestonesCount} / {trial.milestones.length} Completed
-              <ArrowUpRight className="w-3.5 h-3.5 text-[#8E9490]" />
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#6A6558] dark:text-[#8E9490]" />
             </button>
           </div>
 
           <div>
-            <span className="block text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+            <span className="block text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
               Est. API Telemetry
             </span>
             <span className="block text-sm font-mono font-semibold tabular-nums mt-1 text-[#1C1B18] dark:text-[#F2F0EC]">
@@ -310,7 +310,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
           <div>
             <div className="flex items-center justify-between mb-3">
               <div>
-                <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+                <span className="text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
                   Independent Execution Telemetry
                 </span>
                 <h2 className="text-lg font-editorial text-[#1C1B18] dark:text-[#F2F0EC]">
@@ -319,7 +319,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
                     : 'Multi-Model Rubric Score Trajectory'}
                 </h2>
               </div>
-              <TrendingUp className="w-4 h-4 text-[#2F5D50] dark:text-[#428E72]" />
+              <TrendingUp className="w-4 h-4 text-[#2F5D50] dark:text-[#5FAE92]" />
             </div>
 
             <EquityComparisonChart
@@ -344,7 +344,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
         <div className="lg:col-span-5 p-5 rounded-2xl bg-[#FAF8F3] dark:bg-[#1B1E1D] border border-[#DDD7C9] dark:border-[#2B2F2D]">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
                 Weighted Standings
               </span>
               <h2 className="text-lg font-editorial text-[#1C1B18] dark:text-[#F2F0EC]">
@@ -446,13 +446,13 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
                         </>
                       ) : (
                         <>
-                          <div className="text-sm font-bold text-[#2F5D50] dark:text-[#428E72]">
+                          <div className="text-sm font-bold text-[#2F5D50] dark:text-[#5FAE92]">
                             {avgScore.toFixed(1)}{' '}
-                            <span className="text-[10px] font-normal text-[#8E9490]">
+                            <span className="text-[10px] font-normal text-[#6A6558] dark:text-[#8E9490]">
                               / 100
                             </span>
                           </div>
-                          <div className="text-[10px] text-[#8E9490]">
+                          <div className="text-[10px] text-[#6A6558] dark:text-[#8E9490]">
                             {Object.keys(p.submissions).length} deliverable(s)
                           </div>
                         </>
@@ -474,7 +474,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
                     <button
                       type="button"
                       onClick={() => onJumpToParticipantArena(p.id)}
-                      className="inline-flex items-center gap-1 font-semibold text-[#2F5D50] dark:text-[#428E72] hover:underline"
+                      className="inline-flex items-center gap-1 font-semibold text-[#2F5D50] dark:text-[#5FAE92] hover:underline"
                     >
                       <Terminal className="w-3 h-3" /> Open Arena Chat
                     </button>
@@ -504,7 +504,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
                 <div className="flex items-baseline justify-between gap-3 text-xs">
                   <span className="font-semibold text-[#1C1B18] dark:text-[#F2F0EC]">
                     {criterion.name}{' '}
-                    <span className="font-mono font-normal text-[#8E9490]">{criterion.weight}%</span>
+                    <span className="font-mono font-normal text-[#6A6558] dark:text-[#8E9490]">{criterion.weight}%</span>
                   </span>
                   <span className="font-mono tabular-nums text-[#5C615E] dark:text-[#A3A8A5]">
                     {average === null ? 'not scored' : `${average} / 100`}
@@ -539,7 +539,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
                 style={{ backgroundColor: inspectedParticipant.colorHex }}
               />
               <div>
-                <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+                <span className="text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
                   Verified Real-Money Sub-Ledger · Sharpe Est:{' '}
                   {latestSnapshot.sharpeEstimate} · Max DD:{' '}
                   {latestSnapshot.maxDrawdownPct}%
@@ -586,7 +586,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-[#DDD7C9] dark:border-[#2B2F2D] text-[11px] font-mono uppercase text-[#8E9490]">
+                <tr className="border-b border-[#DDD7C9] dark:border-[#2B2F2D] text-[11px] font-mono uppercase text-[#6A6558] dark:text-[#8E9490]">
                   <th className="py-2 pr-3">Ticker / Asset</th>
                   <th className="py-2 px-3 text-right">Weight</th>
                   <th className="py-2 px-3 text-right">Entry → Mark</th>
@@ -639,7 +639,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
         <div className="p-5 rounded-2xl bg-[#FAF8F3] dark:bg-[#1B1E1D] border border-[#DDD7C9] dark:border-[#2B2F2D]">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
                 Governance & Constraints
               </span>
               <h3 className="text-lg font-editorial text-[#1C1B18] dark:text-[#F2F0EC]">
@@ -652,7 +652,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
                 setDraftRules(trial.rules);
                 setIsAmendingRules(!isAmendingRules);
               }}
-              className="inline-flex items-center gap-1 text-xs font-medium text-[#2F5D50] dark:text-[#428E72] hover:underline"
+              className="inline-flex items-center gap-1 text-xs font-medium text-[#2F5D50] dark:text-[#5FAE92] hover:underline"
             >
               <FileEdit className="w-3.5 h-3.5" />
               {isAmendingRules ? 'Cancel' : 'Record Rule Amendment'}
@@ -693,7 +693,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
 
           {/* Weighted Criteria Breakdown */}
           <div className="mt-4 space-y-2">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
               Evaluation Rubric (100% Total)
             </span>
             {trial.criteria.map((c) => (
@@ -705,7 +705,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
                   <span className="font-semibold text-[#1C1B18] dark:text-[#F2F0EC]">
                     {c.name}
                   </span>
-                  <p className="text-[11px] text-[#8E9490]">{c.description}</p>
+                  <p className="text-[11px] text-[#6A6558] dark:text-[#8E9490]">{c.description}</p>
                 </div>
                 <span className="font-mono font-semibold tabular-nums px-2 py-0.5 rounded bg-[#EBE6DB] dark:bg-[#242826]">
                   {c.weight}%
@@ -721,7 +721,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
               </span>
               {trial.ruleAmendments.map((am) => (
                 <div key={am.id} className="mt-1.5 text-xs text-[#5C615E] dark:text-[#A3A8A5]">
-                  <span className="font-mono text-[10px] text-[#8E9490]">
+                  <span className="font-mono text-[10px] text-[#6A6558] dark:text-[#8E9490]">
                     [{new Date(am.timestamp).toLocaleDateString()}]
                   </span>{' '}
                   {am.reason}
@@ -734,7 +734,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
         {/* Inspectable Event Timeline & All Trials Switcher */}
         <div className="p-5 rounded-2xl bg-[#FAF8F3] dark:bg-[#1B1E1D] border border-[#DDD7C9] dark:border-[#2B2F2D] flex flex-col justify-between">
           <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
               Transparent Audit Trail
             </span>
             <h3 className="text-lg font-editorial text-[#1C1B18] dark:text-[#F2F0EC] mb-3">
@@ -747,13 +747,13 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
                   key={entry.id}
                   className="flex items-start gap-2.5 text-xs p-2.5 rounded-xl bg-[#F4F1EA] dark:bg-[#121413] border border-[#DDD7C9] dark:border-[#2B2F2D]"
                 >
-                  <Clock className="w-3.5 h-3.5 text-[#8E9490] shrink-0 mt-0.5" />
+                  <Clock className="w-3.5 h-3.5 text-[#6A6558] dark:text-[#8E9490] shrink-0 mt-0.5" />
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-2">
                       <span className="font-mono text-[10px] uppercase px-1.5 py-0.2 rounded bg-[#EBE6DB] dark:bg-[#242826] text-[#5C615E] dark:text-[#A3A8A5]">
                         {entry.category}
                       </span>
-                      <span className="font-mono text-[10px] text-[#8E9490]">
+                      <span className="font-mono text-[10px] text-[#6A6558] dark:text-[#8E9490]">
                         {new Date(entry.timestamp).toLocaleString([], {
                           month: 'short',
                           day: 'numeric',
@@ -774,13 +774,13 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
           {/* Quick-Launch Competition Templates Strip */}
           <div className="mt-5 pt-4 border-t border-[#DDD7C9] dark:border-[#2B2F2D]">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E9490]">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-[#6A6558] dark:text-[#8E9490]">
                 Switch Event or Launch From Template
               </span>
               <button
                 type="button"
                 onClick={() => onOpenNewTrialModal()}
-                className="inline-flex items-center gap-1 text-xs font-semibold text-[#2F5D50] dark:text-[#428E72]"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-[#2F5D50] dark:text-[#5FAE92]"
               >
                 <Plus className="w-3.5 h-3.5" /> Custom Trial
               </button>
@@ -794,7 +794,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
                   onClick={() => onSelectTrial(t.id)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${
                     t.id === trial.id
-                      ? 'border-[#2F5D50] bg-[#2F5D50]/10 text-[#2F5D50] dark:text-[#428E72] font-semibold'
+                      ? 'border-[#2F5D50] bg-[#2F5D50]/10 text-[#2F5D50] dark:text-[#5FAE92] font-semibold'
                       : 'border-[#DDD7C9] dark:border-[#2B2F2D] text-[#5C615E] dark:text-[#A3A8A5]'
                   }`}
                 >
@@ -816,7 +816,7 @@ export const TrialsOverviewView: React.FC<TrialsOverviewViewProps> = ({
                     <Sparkles className="w-3 h-3 text-[#A8502F] shrink-0" />
                     <span className="truncate">{tpl.name.split(' ')[0]} Trial</span>
                   </div>
-                  <span className="block text-[10px] text-[#8E9490] truncate mt-0.5">
+                  <span className="block text-[10px] text-[#6A6558] dark:text-[#8E9490] truncate mt-0.5">
                     Launch Template →
                   </span>
                 </button>
