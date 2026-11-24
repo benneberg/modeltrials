@@ -13,7 +13,7 @@
     --bg-sub: #EBE6DB;
     --text-primary: #1C1B18;
     --text-secondary: #5A5446;
-    --text-muted: #736C5D;
+    --text-muted: #6A6558;
     --accent-pine: #2F5D50;
     --accent-pine-hover: #1E3D34;
     --accent-clay: #A8502F;
@@ -30,6 +30,7 @@
     --text-muted: #8E9490;
     --accent-pine: #367A61;
     --accent-pine-hover: #428E72;
+    --accent-pine-text: #5FAE92;
     --accent-clay: #D87A5D;
     --border-hairline: #2B2F2D;
   }
@@ -77,6 +78,29 @@
     outline: 2px solid var(--accent-pine);
     outline-offset: 2px;
     border-radius: 2px;
+  }
+
+  /* Touch: grow every control's hit area to 44px without changing layout.
+     The pseudo-element is invisible and extends 6px past the button on each side. */
+  @media (pointer: coarse) {
+    button,
+    [role="button"],
+    select,
+    summary {
+      position: relative;
+    }
+    button::after,
+    [role="button"]::after,
+    summary::after {
+      content: "";
+      position: absolute;
+      inset: -6px;
+    }
+    select,
+    input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+    textarea {
+      min-height: 44px;
+    }
   }
 
   input[type="number"]::-webkit-outer-spin-button,

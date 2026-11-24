@@ -1,17 +1,11 @@
 import { useEffect, useState } from 'react';
 import {
   CheckCircle2,
-  ChevronDown,
-  Coins,
-  Download,
-  LayoutDashboard,
-  Moon,
-  Plus,
-  Scale,
-  Shield,
-  Sun,
-  Terminal,
 } from 'lucide-react';
+import { AppHeader } from './components/AppHeader';
+import { BottomNav } from './components/BottomNav';
+import { SidebarNav } from './components/SidebarNav';
+import type { NavTab } from './types/nav';
 import { CreateTrialModal } from './components/CreateTrialModal';
 import { MilestonesEvalView } from './components/MilestonesEvalView';
 import { ModelsVaultView } from './components/ModelsVaultView';
@@ -49,7 +43,6 @@ import {
   TrialEvent,
 } from './types/trial';
 
-type NavTab = 'trials' | 'arena' | 'milestones' | 'vault';
 
 export function App() {
   const [trials, setTrials] = useState<TrialEvent[]>(INITIAL_TRIAL_EVENTS);
@@ -230,73 +223,71 @@ export function App() {
     }
 
     // Standard or Broadcast execution
-    const updatedParticipants: Participant[] = [];
-    for (const p of activeTrial.participants) {
-      if (!targetIds.includes(p.id)) {
-        updatedParticipants.push(p);
-        continue;
-      }
+    // Targets run in parallel; each streams into its own live bubble. Order is preserved.
+    const updatedParticipants: Participant[] = await Promise.all(
+      activeTrial.participants.map(async (p): Promise<Participant> => {
+        if (!targetIds.includes(p.id)) return p;
 
-      const userMsg: ChatMessage = {
-        id: `msg_u_${Date.now()}_${p.id}`,
-        participantId: p.id,
-        role: messageType === 'SYSTEM_INSTRUCTION' ? 'system' : 'user',
-        messageType,
-        content,
-        timestamp: nowIso,
-      };
+        const userMsg: ChatMessage = {
+          id: `msg_u_${Date.now()}_${p.id}`,
+          participantId: p.id,
+          role: messageType === 'SYSTEM_INSTRUCTION' ? 'system' : 'user',
+          messageType,
+          content,
+          timestamp: nowIso,
+        };
 
-      const modelDef = models.find((m) => m.id === p.modelDefId);
-      const cred = credentials.find((c) => c.id === modelDef?.credentialId);
+        const modelDef = models.find((m) => m.id === p.modelDefId);
+        const cred = credentials.find((c) => c.id === modelDef?.credentialId);
 
-      // Manual / Human participants only receive reminders, no automated AI generation
-      if (modelDef?.provider === 'manual') {
-        updatedParticipants.push({
+        // Manual / Human participants only receive reminders, no automated AI generation
+        if (modelDef?.provider === 'manual') {
+          return {
+            ...p,
+            status: 'AWAITING_MANUAL',
+            messages: [...p.messages, userMsg],
+          };
+        }
+
+        let execResult: Awaited<ReturnType<typeof executeParticipantPrompt>>;
+        try {
+          execResult = await executeParticipantPrompt({
+            trial: activeTrial,
+            participant: { ...p, messages: [...p.messages, userMsg] },
+            modelDef,
+            credential: cred,
+            userPrompt: content,
+            onToken: (t) => setLive(p.id, t),
+          });
+        } finally {
+          setLive(p.id, null);
+        }
+
+        const assistantMsg: ChatMessage = {
+          id: `msg_a_${Date.now()}_${p.id}`,
+          participantId: p.id,
+          role: 'assistant',
+          messageType: 'MODEL_RESPONSE',
+          content: execResult.content,
+          timestamp: new Date().toISOString(),
+          tokensInput: execResult.tokensInput,
+          tokensOutput: execResult.tokensOutput,
+          estimatedCostUsd: execResult.estimatedCostUsd,
+          executionMode: execResult.executionMode,
+        };
+
+        return {
           ...p,
-          status: 'AWAITING_MANUAL',
-          messages: [...p.messages, userMsg],
-        });
-        continue;
-      }
-
-      let execResult: Awaited<ReturnType<typeof executeParticipantPrompt>>;
-      try {
-        execResult = await executeParticipantPrompt({
-          trial: activeTrial,
-          participant: { ...p, messages: [...p.messages, userMsg] },
-          modelDef,
-          credential: cred,
-          userPrompt: content,
-          onToken: (t) => setLive(p.id, t),
-        });
-      } finally {
-        setLive(p.id, null);
-      }
-
-      const assistantMsg: ChatMessage = {
-        id: `msg_a_${Date.now()}_${p.id}`,
-        participantId: p.id,
-        role: 'assistant',
-        messageType: 'MODEL_RESPONSE',
-        content: execResult.content,
-        timestamp: new Date().toISOString(),
-        tokensInput: execResult.tokensInput,
-        tokensOutput: execResult.tokensOutput,
-        estimatedCostUsd: execResult.estimatedCostUsd,
-        executionMode: execResult.executionMode,
-      };
-
-      updatedParticipants.push({
-        ...p,
-        status: 'IDLE',
-        totalTokens:
-          p.totalTokens + execResult.tokensInput + execResult.tokensOutput,
-        estimatedCostUsd: Number(
-          (p.estimatedCostUsd + execResult.estimatedCostUsd).toFixed(4)
-        ),
-        messages: [...p.messages, userMsg, assistantMsg],
-      });
-    }
+          status: 'IDLE',
+          totalTokens:
+            p.totalTokens + execResult.tokensInput + execResult.tokensOutput,
+          estimatedCostUsd: Number(
+            (p.estimatedCostUsd + execResult.estimatedCostUsd).toFixed(4)
+          ),
+          messages: [...p.messages, userMsg, assistantMsg],
+        };
+      })
+    );
 
     const updatedTrial: TrialEvent = {
       ...activeTrial,
@@ -661,255 +652,33 @@ export function App() {
     (s) => s.status === 'MISSED'
   ).length;
 
-  const getLifecycleBadgeClass = (status: EventLifecycle) => {
-    switch (status) {
-      case 'RUNNING':
-        return 'bg-[#2F5D50] text-white';
-      case 'COMPLETED':
-        return 'bg-[#2A6F4E]/15 text-[#2A6F4E]';
-      case 'PAUSED':
-        return 'bg-[#D98A2B]/20 text-[#D98A2B]';
-      default:
-        return 'bg-[#EBE6DB] text-[#5C615E]';
-    }
-  };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F4F1EA] dark:bg-[#121413] text-[#1C1B18] dark:text-[#F2F0EC] transition-colors">
       {/* Top Contextual Header (56px height) */}
-      <header className="sticky top-0 z-30 h-14 px-4 lg:px-6 bg-[#F4F1EA]/90 dark:bg-[#121413]/90 backdrop-blur-md border-b border-[#DDD7C9] dark:border-[#2B2F2D] flex items-center justify-between gap-3">
-        {/* Left: Brand Identity + Active Trial Selector */}
-        <div className="flex items-center gap-3 min-w-0">
-          <div
-            onClick={() => setActiveTab('trials')}
-            className="flex items-center gap-2 cursor-pointer shrink-0"
-          >
-            <div className="w-8 h-8 rounded-lg bg-[#2F5D50] flex items-center justify-center shadow-xs">
-              <svg
-                viewBox="0 0 24 24"
-                className="w-4 h-4 text-[#F4F1EA]"
-                fill="none"
-              >
-                <path
-                  d="M4 17L9.5 9L14 14L20 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <circle cx="20" cy="6" r="2" fill="#A8502F" />
-              </svg>
-            </div>
-            <div className="hidden sm:block">
-              <span className="font-editorial text-lg tracking-tight leading-none block">
-                Model Trials
-              </span>
-              <span className="font-mono text-[9px] uppercase tracking-widest text-[#8E9490] block">
-                v0.3.0 · Local IndexedDB
-              </span>
-            </div>
-          </div>
-
-          <div className="h-5 w-[1px] bg-[#DDD7C9] dark:bg-[#2B2F2D] hidden sm:block" />
-
-          {/* Active Trial Dropdown Switcher */}
-          <div className="relative flex items-center min-w-0">
-            <select
-              aria-label="Select Active Competition"
-              value={activeTrial.id}
-              onChange={(e) => handleSelectTrial(e.target.value)}
-              className="appearance-none pr-7 pl-2.5 py-1 rounded-lg text-xs font-semibold bg-[#FAF8F3] dark:bg-[#1B1E1D] border border-[#DDD7C9] dark:border-[#2B2F2D] text-[#1C1B18] dark:text-[#F2F0EC] truncate max-w-[200px] sm:max-w-[320px] cursor-pointer focus:outline-none focus:border-[#2F5D50]"
-            >
-              {trials.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.title} ({t.status})
-                </option>
-              ))}
-            </select>
-            <ChevronDown className="w-3.5 h-3.5 text-[#8E9490] absolute right-2 pointer-events-none" />
-          </div>
-
-          {/* Status Pill */}
-          <span
-            className={`hidden md:inline-flex items-center gap-1 text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full font-semibold shrink-0 ${getLifecycleBadgeClass(
-              activeTrial.status
-            )}`}
-          >
-            {activeTrial.status === 'RUNNING' && (
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FAF8F3] animate-pulse" />
-            )}
-            {activeTrial.status}
-          </span>
-
-          {activeTrial.isRealMoney && (
-            <span className="hidden xl:inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#A8502F]/15 text-[#A8502F] font-semibold shrink-0">
-              <Coins className="w-3 h-3" /> Real-Money Ledger
-            </span>
-          )}
-        </div>
-
-        {/* Right: Quick Actions & Theme Toggle */}
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            type="button"
-            onClick={() => {
-              setModalInitialTemplateId(undefined);
-              setIsNewTrialModalOpen(true);
-            }}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#2F5D50] hover:bg-[#1E3D34] text-white shadow-xs spring-press"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            <span>New Trial</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={handleExportCurrentTrial}
-            className="hidden sm:inline-flex items-center gap-1 p-1.5 rounded-lg border border-[#DDD7C9] dark:border-[#2B2F2D] bg-[#FAF8F3] dark:bg-[#1B1E1D] text-[#5C615E] dark:text-[#A3A8A5] hover:text-[#1C1B18]"
-            title="One-Click JSON Export"
-          >
-            <Download className="w-4 h-4" />
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setDarkMode(!darkMode)}
-            className="p-1.5 rounded-lg border border-[#DDD7C9] dark:border-[#2B2F2D] bg-[#FAF8F3] dark:bg-[#1B1E1D] text-[#5C615E] dark:text-[#A3A8A5] hover:text-[#1C1B18] dark:hover:text-white"
-            title="Toggle Nordic Light / Dark Theme"
-          >
-            {darkMode ? (
-              <Sun className="w-4 h-4 text-[#C48B37]" />
-            ) : (
-              <Moon className="w-4 h-4" />
-            )}
-          </button>
-        </div>
-      </header>
+      <AppHeader
+        activeTrial={activeTrial}
+        trials={trials}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+        handleExportCurrentTrial={handleExportCurrentTrial}
+        handleSelectTrial={handleSelectTrial}
+        setActiveTab={setActiveTab}
+        setIsNewTrialModalOpen={setIsNewTrialModalOpen}
+        setModalInitialTemplateId={setModalInitialTemplateId}
+      />
 
       {/* Main Centered 1280px Shell */}
       <div className="flex-1 w-full max-w-[1280px] mx-auto flex">
         {/* Desktop Left Navigation Rail (>= 1024px) */}
-        <aside className="hidden lg:flex flex-col justify-between w-60 shrink-0 p-4 border-r border-[#DDD7C9] dark:border-[#2B2F2D]">
-          <div className="space-y-6">
-            <nav className="space-y-1">
-              {(
-                [
-                  {
-                    id: 'trials' as NavTab,
-                    label: 'Trials Overview',
-                    sub: 'Leaderboard & P&L',
-                    icon: LayoutDashboard,
-                    badge: undefined as number | undefined,
-                  },
-                  {
-                    id: 'arena' as NavTab,
-                    label: 'Participant Arena',
-                    sub: `${activeTrial.participants.length} Isolated Threads`,
-                    icon: Terminal,
-                    badge: undefined as number | undefined,
-                  },
-                  {
-                    id: 'milestones' as NavTab,
-                    label: 'Milestones & Eval',
-                    sub: 'Rubric & Schedules',
-                    icon: Scale,
-                    badge: missedCount > 0 ? missedCount : undefined,
-                  },
-                  {
-                    id: 'vault' as NavTab,
-                    label: 'Models & Vault',
-                    sub: 'AES-GCM Keys & JSON',
-                    icon: Shield,
-                    badge: undefined as number | undefined,
-                  },
-                ]
-              ).map((item) => {
-                const Icon = item.icon;
-                const isActive = activeTab === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => setActiveTab(item.id)}
-                    className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all spring-press ${
-                      isActive
-                        ? 'bg-[#2F5D50] text-white shadow-xs'
-                        : 'text-[#5C615E] dark:text-[#A3A8A5] hover:bg-[#EBE6DB] dark:hover:bg-[#1B1E1D]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <Icon className="w-4 h-4 shrink-0" />
-                      <div>
-                        <div className="text-xs font-semibold leading-none">
-                          {item.label}
-                        </div>
-                        <div
-                          className={`text-[10px] mt-0.5 font-mono ${
-                            isActive ? 'text-white/75' : 'text-[#8E9490]'
-                          }`}
-                        >
-                          {item.sub}
-                        </div>
-                      </div>
-                    </div>
-                    {item.badge && (
-                      <span className="px-1.5 py-0.5 text-[10px] font-mono font-bold rounded-full bg-[#D98A2B] text-white">
-                        {item.badge}
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </nav>
-
-            {/* Quick Participant Jump List in Left Rail */}
-            <div className="pt-4 border-t border-[#DDD7C9] dark:border-[#2B2F2D]">
-              <span className="block text-[10px] font-mono uppercase tracking-wider text-[#8E9490] px-2 mb-2">
-                Active Competitors ({activeTrial.visibilityMode})
-              </span>
-              <div className="space-y-1">
-                {activeTrial.participants.map((p) => (
-                  <button
-                    key={p.id}
-                    type="button"
-                    onClick={() => {
-                      setActiveParticipantId(p.id);
-                      setActiveTab('arena');
-                    }}
-                    className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-colors ${
-                      activeTab === 'arena' && activeParticipantId === p.id
-                        ? 'bg-[#EBE6DB] dark:bg-[#242826] font-semibold text-[#1C1B18] dark:text-[#F2F0EC]'
-                        : 'text-[#5C615E] dark:text-[#A3A8A5] hover:bg-[#EBE6DB]/60 dark:hover:bg-[#1B1E1D]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 truncate">
-                      <span
-                        className="w-2 h-2 rounded-full shrink-0"
-                        style={{ backgroundColor: p.colorHex }}
-                      />
-                      <span className="truncate">{p.pseudonym}</span>
-                    </div>
-                    <span className="font-mono text-[10px] text-[#8E9490] tabular-nums ml-1">
-                      {activeTrial.isRealMoney
-                        ? `$${(p.currentEquityUsd / 1000).toFixed(1)}k`
-                        : p.modelName.split(' ')[0]}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Local Storage / Zero-Backend Guarantee Footer */}
-          <div className="p-3 rounded-xl bg-[#EBE6DB]/70 dark:bg-[#1B1E1D] border border-[#DDD7C9] dark:border-[#2B2F2D] text-[11px] text-[#5C615E] dark:text-[#A3A8A5] space-y-1">
-            <div className="font-mono text-[10px] uppercase tracking-wider text-[#2F5D50] dark:text-[#428E72] font-semibold">
-              100% Client-Side Static
-            </div>
-            <p className="leading-snug text-[11px]">
-              All conversations, P&L ledgers, and AES-GCM encrypted keys remain strictly inside your browser&apos;s IndexedDB.
-            </p>
-          </div>
-        </aside>
+      <SidebarNav
+        activeParticipantId={activeParticipantId}
+        activeTab={activeTab}
+        activeTrial={activeTrial}
+        missedCount={missedCount}
+        setActiveParticipantId={setActiveParticipantId}
+        setActiveTab={setActiveTab}
+      />
 
         {/* Primary Workspace Content Area */}
         <main
@@ -1065,59 +834,11 @@ export function App() {
       </div>
 
       {/* Mobile Persistent Bottom Navigation Bar (< 1024px, height: 64px) */}
-      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-30 h-[calc(4rem+env(safe-area-inset-bottom,0px))] pb-[env(safe-area-inset-bottom,0px)] bg-[#FAF8F3]/95 dark:bg-[#1B1E1D]/95 backdrop-blur-md border-t border-[#DDD7C9] dark:border-[#2B2F2D] grid grid-cols-4 px-2">
-        {(
-          [
-            {
-              id: 'trials' as NavTab,
-              label: 'Trials',
-              icon: LayoutDashboard,
-              badge: undefined as number | undefined,
-            },
-            {
-              id: 'arena' as NavTab,
-              label: 'Arena',
-              icon: Terminal,
-              badge: undefined as number | undefined,
-            },
-            {
-              id: 'milestones' as NavTab,
-              label: 'Milestones',
-              icon: Scale,
-              badge: missedCount > 0 ? missedCount : undefined,
-            },
-            {
-              id: 'vault' as NavTab,
-              label: 'Models & Vault',
-              icon: Shield,
-              badge: undefined as number | undefined,
-            },
-          ]
-        ).map((item) => {
-          const Icon = item.icon;
-          const isActive = activeTab === item.id;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => setActiveTab(item.id)}
-              className={`relative flex flex-col items-center justify-center gap-1 transition-colors ${
-                isActive
-                  ? 'text-[#2F5D50] dark:text-[#428E72] font-semibold'
-                  : 'text-[#8E9490]'
-              }`}
-            >
-              <Icon className="w-5 h-5" />
-              <span className="text-[10px] tracking-tight">{item.label}</span>
-              {item.badge && (
-                <span className="absolute top-1.5 right-5 w-4 h-4 rounded-full bg-[#D98A2B] text-white text-[9px] font-mono font-bold flex items-center justify-center">
-                  {item.badge}
-                </span>
-              )}
-            </button>
-          );
-        })}
-      </nav>
+      <BottomNav
+        activeTab={activeTab}
+        missedCount={missedCount}
+        setActiveTab={setActiveTab}
+      />
 
       {/* Toast Feedback Micro-Interaction */}
       {toastMessage && (
