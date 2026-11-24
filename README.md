@@ -23,11 +23,18 @@ The build uses relative paths (`base: './'`), so it works from `user.github.io/r
 - Forget the passphrase and you re-enter your API keys; there is no recovery.
 - Keys saved by the earlier version still work and are marked LEGACY; re-save them to upgrade.
 
+## Structure
+`src/App.tsx` holds state and handlers; `AppHeader`, `SidebarNav` and `BottomNav` are the shell. Business logic lives in `src/services/` (vault, engine, providers, streaming, ranking, import/export) and is covered by tests.
+
+## Accessibility
+Muted and accent text meet WCAG AA contrast in light and dark. On touch devices every button gets a 44px hit area through an invisible extension, so layout is unchanged.
+
 ## Ranking
 Rubric score first. Real-money trials use equity when a rubric score is missing, and as the first tie-break. Remaining ties go to lower cost, then name. The leaderboard says which rule separated two tied participants.
 
 ## Behaviour worth knowing
 - Replies stream in as they are written (OpenAI-compatible, Anthropic and Gemini). Gemini keys are sent in a header, not the URL.
+- Broadcasting a prompt runs all targeted participants in parallel.
 - **Compare two** in the Arena shows two participants turn by turn, with score, tokens and cost.
 - Provider calls retry up to twice on 429 and 5xx (honouring Retry-After), with a 60s timeout per attempt.
 - If a real key is linked and the call fails (CORS, timeout, bad key), the app records a **failed call**, not a made-up answer. Run the prompt in the provider's app and paste the reply as a manual entry.
